@@ -1,48 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shreyash Desai's Portfolio</title>
+    <title>Shreyash Desai | Senior UI/UX Designer Portfolio</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            /* A more refined, professional color palette */
+            --color-primary: 250 204 21; /* yellow-400 - Kept for brand consistency */
+            --color-background: 10 10 10; /* A deeper, more premium black */
+            --color-surface: 23 23 23; /* For cards and elevated surfaces (neutral-900) */
+            --color-foreground: 245 245 245; /* neutral-100 */
+            --color-foreground-medium: 163 163 163; /* neutral-400 */
+            --color-foreground-muted: 115 115 115; /* neutral-500 */
+            --color-border: 38 38 38; /* neutral-800 */
+            --font-sans: 'Inter', sans-serif;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            font-family: var(--font-sans);
+            background-color: rgb(var(--color-background));
+            color: rgb(var(--color-foreground));
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Styles for the marquee animation */
-        @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
+        /* Subtle gradient background for depth */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at top, rgba(var(--color-border), 0.3), transparent 60%);
+            opacity: 0.5;
         }
-        @keyframes marquee-fast {
+
+        /* Marquee Animation */
+        @keyframes marquee {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
         }
         .animate-marquee {
             animation: marquee 40s linear infinite;
+            will-change: transform;
         }
-        .animate-marquee-fast {
-            animation: marquee-fast 25s linear infinite;
-        }
-
-        /* Typewriter cursor style */
+        
+        /* Refined Typewriter Cursor for a softer feel */
         .typewriter-cursor {
             display: inline-block;
-            width: 8px;
-            height: 1.2em;
-            background-color: #f59e0b; /* yellow-500 */
+            width: 2px;
+            height: 1.1em;
+            background-color: rgb(var(--color-primary));
             animation: blink 0.7s infinite;
             margin-left: 4px;
-            vertical-align: middle;
+            vertical-align: text-bottom;
+            border-radius: 2px;
         }
 
         @keyframes blink {
@@ -50,12 +71,37 @@
             50% { opacity: 0; }
         }
         
-        /* Added bounce animation for thumbnails */
-        .thumbnail-bounce {
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Page transition for smoother navigation */
+        .page-transition {
+            animation: pageFadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
-        .thumbnail-bounce:hover {
-            transform: scale(1.08) rotate(-2deg);
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Enhanced focus rings for accessibility - more prominent */
+        *:focus-visible {
+            outline: 2px solid rgb(var(--color-primary));
+            outline-offset: 4px;
+            border-radius: 6px;
+            transition: outline-offset 0.1s ease-in-out;
+        }
+        
+        /* Custom CSS for advanced effects */
+        .text-shadow-sm {
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .card-glow {
+            box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.05), inset 0 0 20px 0 rgba(250,204,21,0.03);
+        }
+        
+        /* Inner glow effect for cards and images - ENHANCED */
+        .inner-glow {
+            box-shadow: inset 0 0 15px 4px rgba(250, 204, 21, 0.08), /* More prominent yellow glow */
+                        inset 0 0 8px 3px rgba(255, 255, 255, 0.15); /* Brighter white edge shine */
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Slightly more visible border */
+            transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out; /* Add transition */
         }
     </style>
     <!-- React CDN -->
@@ -64,11 +110,11 @@
     <!-- Babel for JSX transformation in browser -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body>
+<body class="antialiased">
     <div id="root"></div>
 
     <script type="text/babel">
-        // Inline SVG for LinkedIn Icon
+        // --- ICONS (No changes needed, they are standard and clean) ---
         const LinkedinIcon = ({ size = 24, className = "" }) => (
             <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
@@ -77,21 +123,46 @@
             </svg>
         );
 
-        // Inline SVG for Github Icon (Corrected Path)
         const GithubIcon = ({ size = 24, className = "" }) => (
             <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
                 <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6.1 0-1.3-.5-2.4-1.3-3.2.1-.3.5-1.5-.1-3.2 0 0-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1c-.6 1.7-.2 2.9-.1 3.2-.8.8-1.3 1.9-1.3 3.2 0 4.7 2.7 5.8 5.5 6.1-.6.5-.9 1.2-.9 2.2v3.5z"/>
             </svg>
         );
         
-        // UPDATED: Typewriter effect component to run only once per session
+        const ArrowRightIcon = ({ size = 16, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        );
+        
+        const ArrowLeftIcon = ({ size = 16, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        );
+
+        const MailIcon = ({ size = 20, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+            </svg>
+        );
+
+        const CheckCircleIcon = ({ size = 48, className = "" }) => (
+             <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+        );
+        
+        // --- CORE COMPONENTS ---
         const Typewriter = ({ text, speed = 30, className = "", id }) => {
             const [displayedText, setDisplayedText] = React.useState('');
             const [isComplete, setIsComplete] = React.useState(false);
             const storageKey = `typewriter_complete_${id}`;
 
             React.useEffect(() => {
-                // If the animation has already run in this session, show the full text immediately.
                 if (sessionStorage.getItem(storageKey)) {
                     setDisplayedText(text);
                     setIsComplete(true);
@@ -108,7 +179,6 @@
                     } else {
                         clearInterval(typingInterval);
                         setIsComplete(true);
-                        // Mark this animation as complete for the current session.
                         sessionStorage.setItem(storageKey, 'true');
                     }
                 }, speed);
@@ -123,352 +193,517 @@
                 </p>
             );
         };
+        
+        const ProjectImage = ({ src, alt, caption }) => (
+            <figure className="mb-10 group">
+                <div className="bg-neutral-800/50 rounded-2xl overflow-hidden transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-yellow-400/5 inner-glow">
+                    <img 
+                        src={src} 
+                        alt={alt} 
+                        className="w-full transition-transform duration-500 ease-out group-hover:scale-105" 
+                        onError={(e) => { 
+                            e.target.onerror = null; 
+                            e.target.src = `https://placehold.co/1200x800/171717/F5F5F5?text=Image+Not+Found`;
+                        }} 
+                        loading="lazy"
+                    />
+                </div>
+                {caption && <figcaption className="text-center mt-3 text-sm text-neutral-500 transition-colors duration-300 group-hover:text-yellow-400">{caption}</figcaption>}
+            </figure>
+        );
 
+        const ContactModal = ({ isOpen, onClose, linkedInUrl }) => {
+            const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE"; 
 
-        // The main portfolio component
+            const [formData, setFormData] = React.useState({ name: '', email: '', inquiry: 'freelance', message: '' });
+            const [errors, setErrors] = React.useState({});
+            const [isSubmitting, setIsSubmitting] = React.useState(false);
+            const [isSubmitted, setIsSubmitted] = React.useState(false);
+            const modalRef = React.useRef(null);
+
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({ ...prev, [name]: value }));
+                if (errors[name]) setErrors(prev => ({ ...prev, [name]: null }));
+            };
+
+            const validateForm = () => {
+                const newErrors = {};
+                if (!formData.name.trim()) newErrors.name = "Name is required.";
+                if (!formData.email.trim()) newErrors.email = "Email is required.";
+                else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Email is invalid.";
+                if (!formData.message.trim()) newErrors.message = "Message is required.";
+                return newErrors;
+            };
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                const formErrors = validateForm();
+                if (Object.keys(formErrors).length > 0) {
+                    setErrors(formErrors);
+                    return;
+                }
+                
+                if (WEB3FORMS_ACCESS_KEY === "YOUR_ACCESS_KEY_HERE") {
+                    console.error("Web3Forms Access Key is not set. Please get your key from web3forms.com");
+                    setIsSubmitted(true);
+                    return;
+                }
+
+                setIsSubmitting(true);
+                const data = { ...formData, access_key: WEB3FORMS_ACCESS_KEY, subject: `New Contact Form Submission from ${formData.name}`, from_name: "Your Portfolio" };
+
+                try {
+                    const res = await fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
+                    const result = await res.json();
+                    if (result.success) setIsSubmitted(true);
+                    else { console.error("Form submission failed:", result); alert("There was an error submitting the form."); }
+                } catch (error) {
+                    console.error("Form submission error:", error);
+                    alert("There was an error submitting the form.");
+                } finally {
+                    setIsSubmitting(false);
+                }
+            };
+            
+            React.useEffect(() => {
+                const handleKeyDown = (event) => { if (event.key === 'Escape') onClose(); };
+                if (isOpen) {
+                    window.addEventListener('keydown', handleKeyDown);
+                    document.body.style.overflow = 'hidden';
+                }
+                return () => {
+                    window.removeEventListener('keydown', handleKeyDown);
+                    document.body.style.overflow = 'auto';
+                };
+            }, [isOpen, onClose]);
+
+            React.useEffect(() => {
+                if (!isOpen) {
+                    setTimeout(() => {
+                         setFormData({ name: '', email: '', inquiry: 'freelance', message: '' });
+                         setErrors({});
+                         setIsSubmitted(false);
+                         setIsSubmitting(false);
+                    }, 300);
+                }
+            }, [isOpen]);
+
+            if (!isOpen) return null;
+
+            return (
+                <div 
+                    className="fixed inset-0 bg-black/70 backdrop-blur-sm backdrop-saturate-110 flex items-start sm:items-center justify-center z-50 p-4 transition-opacity duration-300 overflow-y-auto isolate"
+                    onClick={onClose}
+                    role="dialog"
+                    aria-modal="true"
+                >
+                    <div 
+                        className="bg-neutral-900 border border-white/10 rounded-3xl shadow-2xl shadow-yellow-400/5 w-full max-w-lg my-8 p-6 sm:p-8 transform transition-all duration-500 ease-out scale-95 opacity-0 animate-fadeIn card-glow backdrop-brightness-105 backdrop-contrast-110"
+                        style={{ animation: 'fadeIn 0.5s ease-out forwards' }}
+                        onClick={(e) => e.stopPropagation()}
+                        ref={modalRef}
+                    >
+                        {isSubmitted ? (
+                            <div className="text-center flex flex-col items-center justify-center h-full py-8 transition-opacity duration-200">
+                                <CheckCircleIcon size={64} className="text-yellow-400 mb-6" />
+                                <h2 className="text-3xl font-bold text-white mb-2">Thank You!</h2>
+                                <p className="text-neutral-400 mb-8">Your message has been received. I'll get back to you shortly.</p>
+                                <button onClick={onClose} className="bg-yellow-400 text-black px-6 py-3 rounded-full text-base font-semibold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 active:scale-95 active:duration-75">
+                                    Close
+                                </button>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="flex justify-between items-start mb-6">
+                                    <div>
+                                        <h2 className="text-3xl font-bold text-white tracking-wider text-shadow-sm">Let's Connect</h2>
+                                        <p className="text-neutral-500">Fill out the form or reach out directly.</p>
+                                    </div>
+                                    <button onClick={onClose} className="text-neutral-500 hover:text-white transition-colors text-3xl font-light select-none" aria-label="Close modal">&times;</button>
+                                </div>
+                                
+                                <form onSubmit={handleSubmit} className="space-y-5">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                        <div>
+                                            <label htmlFor="name" className="block text-sm font-medium text-neutral-400 mb-1">Name</label>
+                                            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className={`w-full bg-neutral-800 border ${errors.name ? 'border-red-500' : 'border-neutral-700'} text-white rounded-md p-3 transition-all duration-300 ring-1 ring-transparent focus:ring-yellow-400/30 focus:border-yellow-400/50`} />
+                                            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                                        </div>
+                                        <div>
+                                            <label htmlFor="email" className="block text-sm font-medium text-neutral-400 mb-1">Email</label>
+                                            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className={`w-full bg-neutral-800 border ${errors.email ? 'border-red-500' : 'border-neutral-700'} text-white rounded-md p-3 transition-all duration-300 ring-1 ring-transparent focus:ring-yellow-400/30 focus:border-yellow-400/50`} />
+                                            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="inquiry" className="block text-sm font-medium text-neutral-400 mb-1">Inquiry Type</label>
+                                        <select id="inquiry" name="inquiry" value={formData.inquiry} onChange={handleChange} className="w-full bg-neutral-800 border border-neutral-700 text-white rounded-md p-3 transition-all duration-300 ring-1 ring-transparent focus:ring-yellow-400/30 focus:border-yellow-400/50">
+                                            <option value="freelance">Freelance Project</option>
+                                            <option value="full-time">Full-Time Opportunity</option>
+                                            <option value="consultation">Consultation</option>
+                                            <option value="collaboration">Collaboration</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="message" className="block text-sm font-medium text-neutral-400 mb-1">Message</label>
+                                        <textarea id="message" name="message" rows="4" value={formData.message} onChange={handleChange} className={`w-full bg-neutral-800 border ${errors.message ? 'border-red-500' : 'border-neutral-700'} text-white rounded-md p-3 transition-all duration-300 ring-1 ring-transparent focus:ring-yellow-400/30 focus:border-yellow-400/50`}></textarea>
+                                        {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
+                                    </div>
+                                    <button type="submit" disabled={isSubmitting} className="w-full bg-yellow-400 text-black px-6 py-3 rounded-full text-base font-semibold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg shadow-yellow-400/10 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 active:duration-75 select-none">
+                                        {isSubmitting ? 'Sending...' : 'Send Message'}
+                                    </button>
+                                </form>
+
+                                <div className="text-center my-6"><p className="text-neutral-600 text-sm">OR</p></div>
+
+                                <div className="flex flex-col sm:flex-row gap-4">
+                                    <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="flex-1 bg-neutral-800/80 hover:bg-gradient-to-r hover:from-neutral-800 hover:to-neutral-700 text-neutral-200 px-4 py-3 rounded-full text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 group border border-neutral-700 active:scale-95 active:duration-75 select-none">
+                                        <LinkedinIcon size={20} /> LinkedIn
+                                    </a>
+                                     <a href="mailto:shreyashdesai60@gmail.com" className="flex-1 bg-neutral-800/80 hover:bg-gradient-to-r hover:from-neutral-800 hover:to-neutral-700 text-neutral-200 px-4 py-3 rounded-full text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 group border border-neutral-700 active:scale-95 active:duration-75 select-none">
+                                        <MailIcon size={20} /> Direct Email
+                                    </a>
+                                </div>
+                            </>
+                        )}
+                    </div>
+                    <style>{`@keyframes fadeIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }`}</style>
+                </div>
+            );
+        };
+
+        // --- MAIN APP ---
         const App = () => {
             const [currentPage, setCurrentPage] = React.useState('projects');
             const [isScrolled, setIsScrolled] = React.useState(false);
+            const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+            const [isModalOpen, setIsModalOpen] = React.useState(false);
+            const [activeComponent, setActiveComponent] = React.useState('projects');
 
-            React.useEffect(() => {
-                window.scrollTo(0, 0);
-            }, [currentPage]);
+            const navigate = (page) => {
+                if (page === activeComponent) return;
+                setActiveComponent(page);
+                setCurrentPage(page);
+                setIsMenuOpen(false);
+            };
 
+            React.useEffect(() => { window.scrollTo(0, 0); }, [currentPage]);
             React.useEffect(() => {
-                const handleScroll = () => setIsScrolled(window.scrollY > 50);
-                window.addEventListener('scroll', handleScroll);
+                const handleScroll = () => setIsScrolled(window.scrollY > 20);
+                window.addEventListener('scroll', handleScroll, { passive: true });
                 return () => window.removeEventListener('scroll', handleScroll);
             }, []);
 
             const projects = [
-                { id: 'conversify', title: "Conversify", blurb: "Communication skills training platform that helps users improve their speaking abilities through interactive assessments, real-time feedback, and personalized learning experiences", type: "detail", tags: ["UI/UX", "Communication", "Assessment", "Learning Platform"], bgColor: "bg-purple-50", thumbnail: "https://i.postimg.cc/NFdyy0px/Picsart-25-08-27-17-18-55-243.png" },
-                { id: 'dams', title: "Departmental Asset Management System (DAMS)", blurb: "Digitized procurement, inventory, maintenance, student issues, and disposal across a college department with OTP-secured login, role-based dashboards, and multi-level approval workflows", type: "detail", tags: ["Full-Stack", "PHP", "MySQL", "Digital Workflow"], bgColor: "bg-blue-50", thumbnail: "https://i.postimg.cc/FsKpTk5N/IMG-20250827-172042.jpg" },
-                { id: 'cricket', title: "Cricket Gear Hub", blurb: "Complete e-commerce mobile app UI/UX design with 200+ wireframes and interactive prototypes, featuring comprehensive user research across customers, sellers, and admin interfaces", type: "detail", tags: ["Mobile App", "UI/UX", "E-commerce", "Figma"], bgColor: "bg-green-50", thumbnail: "https://i.postimg.cc/4y9MyKJD/file-00000000b3bc61f9a3363ef3e6b3b543.png" },
-                { id: 'dental', title: "PureGleam - Dental Clinic Management", blurb: "Responsive web application for dental clinics featuring service listings, patient reviews, appointment booking, and automated email notifications using modern web technologies", type: "detail", tags: ["Web App", "PHP", "Bootstrap", "Healthcare"], bgColor: "bg-teal-50", thumbnail: "https://i.postimg.cc/KzKppKg1/Picsart-25-08-27-17-32-03-876.jpg" }
+                { id: 'conversify', title: "Conversify", blurb: "A communication skills training platform that helps users improve their speaking abilities through interactive assessments and personalized learning experiences.", type: "detail", tags: ["UI/UX", "Learning Platform", "Figma"], thumbnail: "https://i.postimg.cc/NFdyy0px/Picsart-25-08-27-17-18-55-243.png" },
+                { id: 'dams', title: "Departmental Asset Management", blurb: "Digitized procurement, inventory, and maintenance across a college department with role-based dashboards and multi-level approval workflows.", type: "detail", tags: ["Full-Stack", "PHP", "Digital Workflow"], thumbnail: "https://i.postimg.cc/FsKpTk5N/IMG-20250827-172042.jpg" },
+                { id: 'cricket', title: "Cricket Gear Hub", blurb: "Complete e-commerce mobile app UI/UX design with 200+ wireframes and interactive prototypes, featuring comprehensive user research.", type: "detail", tags: ["Mobile App", "UI/UX", "E-commerce"], thumbnail: "https://i.postimg.cc/4y9MyKJD/file-00000000b3bc61f9a3363ef3e6b3b543.png" },
+                { id: 'dental', title: "PureGleam Dental Management", blurb: "Responsive web application for dental clinics featuring service listings, patient reviews, and appointment booking with automated notifications.", type: "detail", tags: ["Web App", "PHP", "Healthcare"], thumbnail: "https://i.postimg.cc/KzKppKg1/Picsart-25-08-27-17-32-03-876.jpg" }
             ];
-
-            const traits = ["INNOVATIVE", "COLLABORATIVE", "METICULOUS", "AGILE", "CREATIVE"];
-
+            const traits = ["DESIGN SYSTEMS", "USER-CENTRIC", "PIXEL-PERFECT", "INTERACTION DESIGN", "IMPACT-DRIVEN", "ACCESSIBILITY"];
             const testimonials = [
-                { quote: "Shreyash's work on the Departmental Asset Management System was crucial to its success. His problem-solving abilities and dedication to creating a robust and user-friendly solution were invaluable. He is a truly talented and diligent developer.", author: "Project Mentor of DAMS", role: "Professor @ Goa College of Engineering" },
-                { quote: "Working with Shreyash on Conversify was a great experience. His UI/UX design skills combined with his technical background made him invaluable to our team. He has a keen eye for user experience and creates intuitive interfaces.", author: "Team Member of Project Conversify", role: "Teammate @ Conversify" },
-                { quote: "Shreyash demonstrated excellent UI/UX design capabilities and attention to detail during his internship at FluxaticTM Global. His contributions to the Cricket Gear Hub project were instrumental in creating a highly engaging user experience.", author: "Internship Supervisor", role: "UI/UX Lead @ FluxaticTM Global" },
-                { quote: "As a team member for PureGleam - Dental Clinic Management, Shreyash was highly collaborative and brought valuable technical skills to the project. His efforts in implementing responsive design and backend features were commendable.", author: "Team Member of PureGleam", role: "Teammate @ PureGleam" }
+                { quote: "Shreyash's work on DAMS was crucial to its success. His problem-solving abilities and dedication to creating a robust, user-friendly solution were invaluable. A truly talented and diligent developer.", author: "Project Mentor of DAMS", role: "Professor @ Goa College of Engineering" },
+                { quote: "Working with Shreyash on Conversify was a great experience. His UI/UX skills combined with his technical background made him invaluable. He has a keen eye for user experience and creates intuitive interfaces.", author: "Team Member of Project Conversify", role: "Teammate @ Conversify" },
+                { quote: "Shreyash demonstrated excellent UI/UX capabilities and attention to detail during his internship. His contributions to the Cricket Gear Hub project were instrumental in creating a highly engaging user experience.", author: "Internship Supervisor", role: "UI/UX Lead @ FluxaticTM Global" },
+                { quote: "As a team member for PureGleam, Shreyash was highly collaborative and brought valuable technical skills. His efforts in implementing responsive design and backend features were commendable.", author: "Team Member of PureGleam", role: "Teammate @ PureGleam" }
             ];
-
             const experience = [
-                { role: "UI/UX Designer", org: "FluxaticTM Global", dates: "June-August 2024", bullets: [
-                    "Designed UI/UX for CricketGear Hub e-commerce mobile app with comprehensive user research across 3 user types",
-                    "Created 200+ wireframes and interactive prototypes in Figma for seamless user experience",
-                    "Developed complete component library with brand identity system including color palettes and typography standards"
+                { role: "UI/UX Designer", org: "FluxaticTM Global", dates: "Jun-Aug 2025", bullets: [
+                    "Led the UI/UX design for the CricketGear Hub e-commerce app, conducting comprehensive user research across three distinct user personas (customer, seller, admin).",
+                    "Created over 200 detailed wireframes and high-fidelity interactive prototypes in Figma, ensuring a seamless and intuitive user journey from discovery to checkout.",
+                    "Developed and documented a complete component library and brand identity system, including color palettes, typography standards, and interaction patterns."
                 ]}
             ];
-
             const education = [
                 { degree: "B.E. in Computer Engineering", org: "Goa College of Engineering", dates: "2021-2025", bullets: [
-                    "Final-year student specializing in database-driven systems and UI/UX design",
-                    "Proficient in PHP, MySQL, JavaScript, and modern web development frameworks",
-                    "Strong foundation in full-stack development and responsive design principles"
+                    "Specialized in database-driven systems and human-computer interaction, consistently applying user-centric design principles to technical projects.",
+                    "Proficient in <span class='text-yellow-400 font-semibold'>full-stack development</span> (PHP, MySQL, JavaScript) and modern design tools, enabling effective collaboration between design and engineering.",
                 ]},
-                { degree: "Higher Secondary Education", org: "Government Higher Secondary School, Canacona", dates: "2020-2021 | 69%", bullets: [
-                    "Completed higher secondary education with focus on science and mathematics",
-                    "Built strong analytical and problem-solving foundation"
-                ]},
-                { degree: "Secondary Education", org: "Indian School Muscat, Oman", dates: "2018-2019 | 79.4%", bullets: [
-                    "International schooling background providing global perspective",
-                    "Enhanced English proficiency and cross-cultural communication skills",
-                    "Strong academic performance across multiple subjects"
-                ]}
+                { degree: "Higher Secondary Education", org: "Govt. HSS, Canacona", dates: "2020-2021 | 69%", bullets: ["Completed higher secondary education with a focus on science and mathematics, building a strong analytical and problem-solving foundation."]},
+                { degree: "Secondary Education", org: "Indian School Muscat, Oman", dates: "2018-2019 | 79.4%", bullets: ["Gained a global perspective and enhanced cross-cultural communication skills through an international schooling background."]}
             ];
-            
             const certificates = [
                 { name: "Human-Computer Interaction | NPTEL", link: "https://i.postimg.cc/QdjC0QNy/hci-nptel.jpg" },
-                { name: "Leadership and Team Effectiveness | NPTEL", link: "https://i.postimg.cc/MK7X7PwB/leadership-nptel.jpg" },
-                { name: "Privacy and Security in Online Social Media | NPTEL", link: "https://i.postimg.cc/C5yLDD6J/privacy-security-nptel.jpg" },
+                { name: "Leadership & Team Effectiveness | NPTEL", link: "https://i.postimg.cc/MK7X7PwB/leadership-nptel.jpg" },
+                { name: "Privacy & Security in Social Media | NPTEL", link: "https://i.postimg.cc/C5yLDD6J/privacy-security-nptel.jpg" },
                 { name: "Social Network Analysis | NPTEL", link: "https://i.postimg.cc/J4VGBwfm/social-network-nptel.jpg" },
                 { name: "Elite Trader Funded Next", link: "https://i.postimg.cc/yx9xrnSw/Screenshot-20250827-195940.jpg" }
             ];
-
             const linkedInUrl = "https://www.linkedin.com/in/shreyash-desai-892a4a371?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app";
             const resumeUrl = "https://i.postimg.cc/J477rkrV/Screenshot-20250828-131322.jpg";
             const githubUrl = "https://github.com/shreyash-desai";
             const profileImageUrl = "https://i.postimg.cc/j2sSW8fK/IMG-20250414-153929-447.webp";
 
+            // --- LAYOUT COMPONENTS ---
             const Footer = () => (
-                <footer className="bg-black py-16 text-center border-t border-gray-800">
-                    <div className="container mx-auto px-6">
-                        <h2 className="text-3xl font-bold mb-2 text-white">Interested in a Collaboration?</h2>
-                        <p className="text-5xl font-extrabold text-yellow-500 mb-6">Let's Connect and Create</p>
-                        <div className="flex justify-center space-x-6 mb-6">
-                            <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white"><LinkedinIcon size={28} /></a>
-                            <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white"><GithubIcon size={28} /></a>
+                <footer className="bg-neutral-950/50 py-20 text-center border-t border-neutral-900">
+                    <div className="max-w-7xl mx-auto px-8 lg:px-12">
+                        <h2 className="text-4xl font-bold mb-3 text-neutral-100 tracking-wider text-shadow-sm">Let's Build Something Great</h2>
+                        <p className="text-lg text-neutral-400 mb-8 max-w-2xl mx-auto">I'm currently available for new opportunities. If you have a project in mind, let's connect.</p>
+                        <div className="flex justify-center items-center space-x-4 sm:space-x-6 mb-10">
+                            <button onClick={() => setIsModalOpen(true)} className="bg-yellow-400 text-black px-6 py-3 rounded-full text-base font-semibold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg shadow-yellow-400/10 active:scale-95 active:duration-75 select-none">
+                                Contact Me <ArrowRightIcon className="transition-transform duration-300 group-hover:translate-x-1"/>
+                            </button>
+                            <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-3 rounded-full bg-neutral-800/50 hover:bg-neutral-800 text-neutral-400 hover:text-yellow-400 transition-all duration-500 ease-out transform hover:scale-110 active:scale-95 active:duration-75"><LinkedinIcon size={24} /></a>
+                            <a href={githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-3 rounded-full bg-neutral-800/50 hover:bg-neutral-800 text-neutral-400 hover:text-yellow-400 transition-all duration-500 ease-out transform hover:scale-110 active:scale-95 active:duration-75"><GithubIcon size={24} /></a>
                         </div>
-                        <a href="mailto:shreyashdesai60@gmail.com" className="text-lg text-gray-300 hover:text-white">shreyashdesai60@gmail.com</a>
-                        <p className="text-sm text-gray-600 mt-12">@Shreyash Desai 2025</p>
+                        <p className="text-sm text-neutral-600 mt-16">Designed & Built by Shreyash Desai © 2025</p>
                     </div>
                 </footer>
             );
 
             const Navigation = () => (
-                <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black bg-opacity-70 backdrop-blur-sm' : 'bg-transparent'}`}>
-                    <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                        <button onClick={() => setCurrentPage('projects')} className="text-2xl font-light italic text-white hover:text-yellow-500 transition-colors">sd</button>
-                        <div className="flex items-center space-x-6">
-                            <button onClick={() => setCurrentPage('projects')} className={`text-sm transition-colors ${currentPage === 'projects' || projects.some(p => p.id === currentPage) ? 'text-white border-b border-yellow-500 pb-1' : 'text-gray-400 hover:text-white'}`}>Projects</button>
-                            <button onClick={() => setCurrentPage('about')} className={`text-sm transition-colors ${currentPage === 'about' ? 'text-white border-b border-yellow-500 pb-1' : 'text-gray-400 hover:text-white'}`}>About</button>
-                            <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="bg-yellow-500 text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-yellow-400 transition-colors">Resume →</a>
+                <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-out isolate ${isScrolled ? 'bg-black/50 backdrop-blur-sm backdrop-saturate-110 border-b border-neutral-800' : 'bg-transparent'}`}>
+                    <div className="max-w-7xl mx-auto px-8 lg:px-12 h-20 flex justify-between items-center relative">
+                        <button onClick={() => navigate('projects')} className="text-2xl font-bold text-neutral-100 hover:text-yellow-400 transition-colors duration-300 group z-10 select-none" aria-label="Home">
+                            S<span className="text-yellow-400 group-hover:text-white transition-colors duration-300">.</span>D
+                        </button>
+                        
+                        <div className="md:hidden absolute left-1/2 -translate-x-1/2">
+                             <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-yellow-300 transition-all duration-300 flex items-center gap-2 shadow-md shadow-yellow-400/20 transform hover:scale-105 active:scale-95 active:duration-75 select-none">
+                                Resume
+                            </a>
+                        </div>
+                        
+                        <div className="hidden md:flex items-center space-x-1">
+                            <button onClick={() => navigate('projects')} className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300 relative select-none ${currentPage === 'projects' || projects.some(p => p.id === currentPage) ? 'text-white bg-neutral-800/50' : 'text-neutral-400 hover:text-white hover:bg-neutral-800/50'}`}>
+                                Projects
+                            </button>
+                            <button onClick={() => navigate('about')} className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300 relative select-none ${currentPage === 'about' ? 'text-white bg-neutral-800/50' : 'text-neutral-400 hover:text-white hover:bg-neutral-800/50'}`}>
+                                About
+                            </button>
+                        </div>
+                        
+                        <div className="hidden md:flex">
+                             <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-yellow-300 transition-all duration-300 flex items-center gap-2 group transform hover:scale-105 shadow-lg shadow-yellow-400/10 active:scale-95 active:duration-75 select-none">
+                                Resume <ArrowRightIcon className="transition-transform duration-300 group-hover:translate-x-1" />
+                            </a>
+                        </div>
+                        
+                        <div className="md:hidden z-10">
+                             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none p-2 select-none" aria-label="Open menu">
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}></path></svg>
+                            </button>
                         </div>
                     </div>
+                    {isMenuOpen && (
+                        <div className="md:hidden bg-black/80 backdrop-blur-lg py-4 border-t border-neutral-800 transition-opacity duration-200">
+                            <button onClick={() => navigate('projects')} className="block w-full text-left px-8 py-3 text-lg text-neutral-200 hover:bg-neutral-800/50 select-none">Projects</button>
+                            <button onClick={() => navigate('about')} className="block w-full text-left px-8 py-3 text-lg text-neutral-200 hover:bg-neutral-800/50 select-none">About</button>
+                        </div>
+                    )}
                 </nav>
             );
 
-            const Marquee = ({ items }) => {
-                const duplicatedItems = [...items, ...items, ...items, ...items];
-                return (
-                    <div className="relative flex overflow-x-hidden bg-black text-white py-4 my-16 border-y border-gray-800">
-                        <div className="py-2 animate-marquee whitespace-nowrap flex">
-                            {duplicatedItems.map((trait, index) => (
-                                <span key={index} className="text-2xl font-bold mx-4 flex-shrink-0">{trait}<span className="text-yellow-500 mx-4">•</span></span>
-                            ))}
-                        </div>
+            const Marquee = ({ items }) => (
+                <div className="relative flex overflow-x-hidden bg-neutral-900/50 text-neutral-100 py-6 my-24 border-y border-neutral-800">
+                    <div className="py-2 animate-marquee whitespace-nowrap flex">
+                        {[...items, ...items, ...items, ...items].map((item, index) => (
+                            <span key={index} className="text-3xl font-semibold mx-8 flex-shrink-0 flex items-center gap-8 tracking-wider uppercase">
+                                {item}
+                                <span className="text-yellow-400 text-4xl">•</span>
+                            </span>
+                        ))}
                     </div>
-                );
-            };
+                </div>
+            );
 
-            const TestimonialMarquee = ({ testimonials }) => {
-                const duplicatedTestimonials = [...testimonials, ...testimonials];
-                return (
-                     <div className="relative flex overflow-x-hidden py-10 bg-gray-900 border-y border-gray-800">
-                        <div className="py-2 animate-marquee-fast flex">
-                            {duplicatedTestimonials.map((testimonial, index) => (
-                                <div key={index} className="mx-4 p-6 rounded-lg text-left shadow-lg bg-gray-800 max-w-[calc(100vw-48px)] sm:max-w-sm flex-shrink-0">
-                                    <p className="text-gray-300 italic mb-4 text-sm leading-relaxed">"{testimonial.quote}"</p>
-                                    <p className="font-bold text-white text-base">{testimonial.author}</p>
-                                    <p className="text-sm text-yellow-500">{testimonial.role}</p>
-                                </div>
-                            ))}
-                        </div>
+            const TestimonialCard = ({ testimonial }) => (
+                <div className="mx-4 p-8 rounded-2xl text-left bg-neutral-900 border border-white/10 max-w-[calc(100vw-48px)] sm:max-w-md flex-shrink-0 flex flex-col h-full card-glow shadow-2xl shadow-yellow-400/5">
+                    <p className="text-neutral-300 italic mb-6 text-base leading-relaxed flex-grow">"{testimonial.quote}"</p>
+                    <div>
+                        <p className="font-bold text-neutral-100 text-lg">{testimonial.author}</p>
+                        <p className="text-base text-yellow-400">{testimonial.role}</p>
                     </div>
-                );
-            };
+                </div>
+            );
 
             const ProjectCard = ({ project }) => (
-                <div onClick={() => setCurrentPage(project.id)} className={`p-6 rounded-lg shadow-lg cursor-pointer thumbnail-bounce ${project.bgColor}`}>
-                    <div className="relative h-56 mb-4 rounded-md overflow-hidden bg-gray-200">
-                        <img src={project.thumbnail} alt={project.title} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
-                        <div className="absolute inset-0 bg-gray-200 items-center justify-center text-gray-500 hidden">Preview Image</div>
-                    </div>
-                    <h3 className="text-xl font-bold mb-2 text-gray-800">{project.title}</h3>
-                    <p className="text-gray-600 text-sm mb-4">{project.blurb}</p>
-                    <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag, i) => <span key={i} className="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">{tag}</span>)}
+                <div onClick={() => navigate(project.id)} className={`group relative p-8 rounded-2xl shadow-lg cursor-pointer transition-all duration-500 ease-out overflow-hidden bg-gradient-to-br from-neutral-900/80 via-neutral-800/60 to-neutral-900/80 hover:shadow-2xl hover:shadow-yellow-400/10 hover:-translate-y-2 select-none inner-glow`}>
+                    <div className="relative z-10">
+                        <div className="relative h-64 mb-6 rounded-lg overflow-hidden group-hover:shadow-inner inner-glow">
+                            <img src={project.thumbnail} alt={`${project.title} thumbnail`} className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/800x600/171717/F5F5F5?text=Preview`; }} loading="lazy" />
+                        </div>
+                        <h3 className="text-2xl font-bold mb-2 text-neutral-100">{project.title}</h3>
+                        <p className="text-neutral-400 text-base mb-6 leading-relaxed">{project.blurb}</p>
+                        <div className="flex flex-wrap gap-2">
+                            {project.tags.map((tag, i) => <span key={i} className="bg-neutral-800 border border-neutral-700 text-yellow-400 text-xs font-medium px-3 py-1 rounded-full">{tag}</span>)}
+                        </div>
                     </div>
                 </div>
             );
             
-            // Reusable image component with hover effect
-            const ProjectImage = ({ src, alt, caption }) => (
-                <div className="mb-8 cursor-pointer transform hover:scale-105 transition-transform duration-300 group">
-                    <img src={src} alt={alt} className="rounded-lg shadow-lg w-full" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
-                    <div className="bg-gray-800 p-4 rounded-lg mt-2 text-center text-gray-400 hidden">Image loading...</div>
-                    {caption && <p className="text-center mt-2 text-sm text-gray-500 group-hover:text-yellow-400 transition-colors">{caption}</p>}
+            const ProjectDetailPage = ({ project, children, teamSize, duration, year }) => (
+                 <div className="bg-neutral-950 text-neutral-100 min-h-screen page-transition">
+                    <div className="max-w-7xl mx-auto px-8 lg:px-12 pt-32 pb-24">
+                        <button onClick={() => navigate('projects')} className="text-yellow-400 hover:text-yellow-300 mb-12 flex items-center gap-2 group transition-all duration-300 font-semibold select-none">
+                            <ArrowLeftIcon className="transition-transform duration-300 group-hover:-translate-x-1"/> 
+                            Back to All Projects
+                        </button>
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                            <div className="lg:col-span-4">
+                                <div className="sticky top-28">
+                                    <h1 className="text-5xl lg:text-6xl font-extrabold mb-4 leading-tight tracking-tighter text-shadow-sm">{project.title}</h1>
+                                    <p className="text-lg text-neutral-400 mb-8">{project.blurb}</p>
+                                    <div className="space-y-4 text-neutral-300 border-l-4 border-yellow-400/50 pl-6">
+                                        <p><strong className="font-semibold text-neutral-100 w-24 inline-block">ROLE</strong> {project.tags[0]}</p>
+                                        <p><strong className="font-semibold text-neutral-100 w-24 inline-block">DURATION</strong> {duration}</p>
+                                        <p><strong className="font-semibold text-neutral-100 w-24 inline-block">TEAM</strong> {teamSize}</p>
+                                        <p><strong className="font-semibold text-neutral-100 w-24 inline-block">YEAR</strong> {year}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="lg:col-span-8 lg:col-start-5">
+                                {children}
+                            </div>
+                        </div>
+                    </div>
+                    <Footer />
                 </div>
             );
 
             const ConversifyProject = () => (
-                <div className="bg-black text-white min-h-screen">
-                    <div className="container mx-auto px-6 py-24">
-                        <button onClick={() => setCurrentPage('projects')} className="text-yellow-500 hover:text-yellow-400 mb-8 flex items-center gap-2">← Back to Projects</button>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div className="md:col-span-1"><div className="sticky top-24"><p className="text-sm text-gray-400">UI/UX Designer</p><p className="text-sm text-gray-400">4 months</p><p className="text-sm text-gray-400">2024</p></div></div>
-                            <div className="md:col-span-2">
-                                <h1 className="text-5xl font-bold mb-4">Conversify</h1>
-                                <p className="text-lg text-gray-300 mb-8">A communication skills training platform that helps users improve their speaking abilities through interactive assessments, real-time feedback, and personalized learning experiences.</p>
-                                <div className="border-t border-b border-gray-700 py-4 mb-8"><p><span className="font-semibold">TEAM:</span> Group of 2</p></div>
-                                <h2 className="text-3xl font-bold mb-4">Project Vision</h2>
-                                <p className="mb-8 text-gray-400">Conversify addresses the growing need for effective communication skills in both personal and professional settings. The platform provides users with tools to "elevate their communication skills effortlessly" through personalized speaking assessments and comprehensive feedback systems.</p>
-                                <h2 className="text-3xl font-bold mb-4">Core Features</h2>
-                                <ul className="list-disc list-inside mb-8 text-gray-400 space-y-2">
-                                    <li>Interactive Speaking Tests with real-time voice recording and analysis</li>
-                                    <li>Comprehensive Scoring System across multiple communication metrics</li>
-                                    <li>Three-Step Learning Process: Record, Learn, and Repeat</li>
-                                    <li>Personalized feedback on pronunciation, fluency, and accuracy</li>
-                                    <li>Progress tracking and continuous improvement recommendations</li>
-                                </ul>
-                                <h2 className="text-3xl font-bold mb-4">UI Design Screens</h2>
-                                <ProjectImage src="https://i.postimg.cc/NFdyy0px/Picsart-25-08-27-17-18-55-243.png" alt="Conversify Landing" caption="Landing Page" />
-                                <ProjectImage src="https://i.postimg.cc/wjZmc7Hf/Picsart-25-08-27-17-23-24-610.png" alt="Conversify Dashboard" caption="User Dashboard" />
-                                <h2 className="text-3xl font-bold mb-4">User Experience Goals</h2>
-                                <p className="mb-8 text-gray-400">The platform targets both personal and professional development, helping users overcome communication barriers and build confidence in their speaking abilities. The design prioritizes user engagement through clear visual feedback and intuitive interaction patterns.</p>
-                                <div className="flex flex-wrap gap-2 mb-12">{["UI/UX Design", "Figma", "User Research", "Communication Skills", "Learning Platform"].map((tech, i) => <span key={i} className="bg-gray-800 text-yellow-400 text-sm px-3 py-1 rounded-full">{tech}</span>)}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <Footer />
-                </div>
+                <ProjectDetailPage project={projects.find(p => p.id === 'conversify')} teamSize="Group of 2" duration="4 months" year="2025">
+                    <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Project Vision</h2>
+                    <p className="mb-12 text-lg text-neutral-400 leading-relaxed">Conversify addresses the growing need for effective communication skills in both personal and professional settings. The platform provides users with tools to "elevate their communication skills effortlessly" through personalized speaking assessments and comprehensive feedback systems.</p>
+                    <ProjectImage src="https://i.postimg.cc/NFdyy0px/Picsart-25-08-27-17-18-55-243.png" alt="Conversify Landing" caption="Landing Page" />
+                    <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Core Features & Impact</h2>
+                    <ul className="list-disc list-inside mb-12 text-lg text-neutral-400 space-y-3 leading-relaxed">
+                        <li><strong>Interactive Speaking Tests:</strong> Real-time voice recording and analysis to provide immediate, actionable feedback.</li>
+                        <li><strong>Comprehensive Scoring System:</strong> Measures multiple communication metrics including pace, filler words, and clarity.</li>
+                        <li><strong>Three-Step Learning Process:</strong> A cyclical model of Record, Learn, and Repeat to encourage iterative improvement.</li>
+                        <li><strong>Personalized Feedback:</strong> Focuses on pronunciation, fluency, and accuracy to guide user development.</li>
+                        <li><strong>Progress Tracking:</strong> Visual dashboards to help users see their <span className="text-yellow-400 font-semibold">improvement over time</span> and stay motivated.</li>
+                    </ul>
+                    <ProjectImage src="https://i.postimg.cc/wjZmc7Hf/Picsart-25-08-27-17-23-24-610.png" alt="Conversify Dashboard" caption="User Dashboard" />
+                    <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">User Experience Goals</h2>
+                    <p className="mb-12 text-lg text-neutral-400 leading-relaxed">The platform targets both personal and professional development, helping users overcome communication barriers and build confidence. The design prioritizes user engagement through clear visual feedback and intuitive interaction patterns, making the learning process feel less like a chore and more like a game.</p>
+                </ProjectDetailPage>
             );
 
             const DAMSProject = () => (
-                <div className="bg-black text-white min-h-screen">
-                    <div className="container mx-auto px-6 py-24">
-                        <button onClick={() => setCurrentPage('projects')} className="text-yellow-500 hover:text-yellow-400 mb-8 flex items-center gap-2">← Back to Projects</button>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div className="md:col-span-1"><div className="sticky top-24"><p className="text-sm text-gray-400">Full-Stack Developer</p><p className="text-sm text-gray-400">6 months</p><p className="text-sm text-gray-400">2024</p></div></div>
-                            <div className="md:col-span-2">
-                                <h1 className="text-5xl font-bold mb-4">Departmental Asset Management System (DAMS)</h1>
-                                <p className="text-lg text-gray-300 mb-8">Digitized procurement, inventory, maintenance, student issues, and disposal across a college department. Replaced paperwork with digital workflows—saving paper, reducing costs, and boosting efficiency.</p>
-                                <div className="border-t border-b border-gray-700 py-4 mb-8"><p><span className="font-semibold">TEAM:</span> Group of 5</p></div>
-                                <h2 className="text-3xl font-bold mb-4">The Challenge</h2>
-                                <p className="mb-8 text-gray-400">The college department struggled with manual paperwork processes for asset management, leading to inefficient procurement workflows, poor inventory tracking, delayed maintenance requests, and cumbersome disposal procedures. The existing system was prone to errors, document loss, and lacked proper audit trails.</p>
-                                <h2 className="text-3xl font-bold mb-4">The Solution</h2>
-                                <ul className="list-disc list-inside mb-8 text-gray-400 space-y-2">
-                                    <li>OTP-secured authentication system for enhanced security</li>
-                                    <li>Role-based dashboards for different user types (admin, staff, students)</li>
-                                    <li>Multi-level approval workflows for procurement and disposal</li>
-                                    <li>Digital signatures and automated email notifications</li>
-                                    <li>Real-time inventory synchronization and maintenance tracking</li>
-                                </ul>
-                                <h2 className="text-3xl font-bold mb-4">System Screenshots</h2>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                                    <ProjectImage src="https://i.postimg.cc/FsKpTk5N/IMG-20250827-172042.jpg" alt="DAMS Landing" caption="Landing Page" />
-                                    <ProjectImage src="https://i.postimg.cc/nr3kHpmy/IMG-20250827-172057.jpg" alt="DAMS Forms" caption="Form Trackers Checklist" />
-                                    <ProjectImage src="https://i.postimg.cc/CL6NXMSD/IMG-20250827-172109.jpg" alt="DAMS Maintenance" caption="Maintenance Module" />
-                                    <ProjectImage src="https://i.postimg.cc/k4dwsj9p/IMG-20250827-172127.jpg" alt="DAMS Disposal" caption="Disposal Module" />
-                                </div>
-                                <h2 className="text-3xl font-bold mb-4">Technical Implementation</h2>
-                                <p className="mb-8 text-gray-400">Built using PHP for server-side logic, MySQL for robust data management, and responsive frontend with HTML, CSS, and JavaScript. Implemented AJAX for seamless user interactions and PDF generation for document management.</p>
-                                <div className="flex flex-wrap gap-2 mb-12">{["PHP", "MySQL", "JavaScript", "HTML/CSS", "AJAX", "PDF Generation"].map((tech, i) => <span key={i} className="bg-gray-800 text-yellow-400 text-sm px-3 py-1 rounded-full">{tech}</span>)}</div>
-                            </div>
-                        </div>
+                <ProjectDetailPage project={projects.find(p => p.id === 'dams')} teamSize="Group of 5" duration="6 months" year="2025">
+                    <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">The Challenge: Inefficiency & Error</h2>
+                    <p className="mb-12 text-lg text-neutral-400 leading-relaxed">The college department struggled with manual paperwork for asset management, leading to inefficient procurement, poor inventory tracking, and delayed maintenance. The system was prone to errors, document loss, and lacked proper audit trails, costing significant time and resources.</p>
+                    <ProjectImage src="https://i.postimg.cc/FsKpTk5N/IMG-20250827-172042.jpg" alt="DAMS Landing" caption="Landing Page" />
+                    <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">The Solution: A Digital Ecosystem</h2>
+                    <ul className="list-disc list-inside mb-12 text-lg text-neutral-400 space-y-3 leading-relaxed">
+                        <li><strong>Secure Authentication:</strong> Implemented an OTP-secured system to ensure data integrity and authorized access.</li>
+                        <li><strong>Role-Based Dashboards:</strong> Designed tailored interfaces for admins, staff, and students to streamline their specific tasks.</li>
+                        <li><strong>Automated Workflows:</strong> Created multi-level approval chains for procurement and disposal, reducing manual intervention.</li>
+                        <li><strong>Digital Signatures & Notifications:</strong> Integrated features to accelerate approvals and keep stakeholders informed.</li>
+                        <li><strong>Real-Time Tracking:</strong> Enabled <span className="text-yellow-400 font-semibold">live inventory synchronization</span> and maintenance scheduling to improve asset lifecycle management.</li>
+                    </ul>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+                        <ProjectImage src="https://i.postimg.cc/nr3kHpmy/IMG-20250827-172057.jpg" alt="DAMS Forms" caption="Form Trackers Checklist" />
+                        <ProjectImage src="https://i.postimg.cc/CL6NXMSD/IMG-20250827-172109.jpg" alt="DAMS Maintenance" caption="Maintenance Module" />
                     </div>
-                    <Footer />
-                </div>
+                </ProjectDetailPage>
             );
-
-            const DentalProject = () => (
-                <div className="bg-black text-white min-h-screen">
-                    <div className="container mx-auto px-6 py-24">
-                        <button onClick={() => setCurrentPage('projects')} className="text-yellow-500 hover:text-yellow-400 mb-8 flex items-center gap-2">← Back to Projects</button>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div className="md:col-span-1"><div className="sticky top-24"><p className="text-sm text-gray-400">Web Developer</p><p className="text-sm text-gray-400">3 months</p><p className="text-sm text-gray-400">2024</p></div></div>
-                            <div className="md:col-span-2">
-                                <h1 className="text-5xl font-bold mb-4">PureGleam - Dental Clinic Management</h1>
-                                <p className="text-lg text-gray-300 mb-8">A responsive web application for dental clinics featuring service listings, patient reviews, appointment booking, and automated email notifications using modern web technologies.</p>
-                                <div className="border-t border-b border-gray-700 py-4 mb-8"><p><span className="font-semibold">TEAM:</span> Group of 2</p></div>
-                                <h2 className="text-3xl font-bold mb-4">About the Project</h2>
-                                <p className="mb-8 text-gray-400">PureGleam addresses the need for modern dental clinics to have an online presence that facilitates patient interaction, appointment scheduling, and service promotion. The platform bridges the gap between traditional dental practices and digital patient engagement.</p>
-                                <h2 className="text-3xl font-bold mb-4">Key Features</h2>
-                                <ul className="list-disc list-inside mb-8 text-gray-400 space-y-2">
-                                    <li>Comprehensive service listings with detailed descriptions and pricing</li>
-                                    <li>Patient review and rating system for service feedback</li>
-                                    <li>Online appointment booking with calendar integration</li>
-                                    <li>Automated email notifications for appointments and reminders</li>
-                                    <li>Responsive design optimized for all devices</li>
-                                </ul>
-                                <h2 className="text-3xl font-bold mb-4">Application Screenshots</h2>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                                    <ProjectImage src="https://i.postimg.cc/KzKppKg1/Picsart-25-08-27-17-32-03-876.jpg" alt="Dental Home" caption="Homepage / Landing Page" />
-                                    <ProjectImage src="https://i.postimg.cc/jj3kh6CV/Picsart-25-08-27-17-32-26-627.jpg" alt="Dental About" caption="About Us Section" />
-                                    <ProjectImage src="https://i.postimg.cc/RFjskMcX/Picsart-25-08-27-17-32-48-159.jpg" alt="Dental Services" caption="Our Services Section" />
-                                    <ProjectImage src="https://i.postimg.cc/d0VxdNsm/Picsart-25-08-27-17-33-12-635.jpg" alt="Dental Process" caption="Work Process Section" />
-                                    <div className="sm:col-span-2"><ProjectImage src="https://i.postimg.cc/8zHY7gSz/Picsart-25-08-27-17-33-34-220.jpg" alt="Dental Appointment" caption="Make Appointment Section" /></div>
-                                </div>
-                                <h2 className="text-3xl font-bold mb-4">Technical Stack</h2>
-                                <p className="mb-8 text-gray-400">Developed using PHP for backend functionality, MySQL for data management, Bootstrap for responsive design, and integrated email services for automated notifications. The application ensures cross-browser compatibility and optimal performance across all devices.</p>
-                                <div className="flex flex-wrap gap-2 mb-12">{["PHP", "MySQL", "HTML/CSS", "Bootstrap", "JavaScript", "Email Integration"].map((tech, i) => <span key={i} className="bg-gray-800 text-yellow-400 text-sm px-3 py-1 rounded-full">{tech}</span>)}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <Footer />
-                </div>
-            );
-
+            
             const CricketProject = () => {
                 const [showPrototype, setShowPrototype] = React.useState(false);
-                // UPDATED: Correct Figma embed URL
                 const figmaEmbedUrl = "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2Fm4MxV16zppie7RuJkmuocz%3Fnode-id%3D152-688";
 
                 return (
-                    <div className="bg-black text-white min-h-screen">
-                        {showPrototype && (
-                            <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4" onClick={() => setShowPrototype(false)}>
-                                <div className="relative w-full max-w-sm h-[80vh] bg-black border-4 border-gray-700 rounded-[40px] p-4 shadow-2xl" onClick={e => e.stopPropagation()}>
-                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-xl"></div>
-                                    <iframe
-                                        className="w-full h-full rounded-[24px] bg-white"
-                                        src={figmaEmbedUrl}
-                                        allowFullScreen
-                                    ></iframe>
-                                    <button onClick={() => setShowPrototype(false)} className="absolute -top-4 -right-4 bg-yellow-500 text-black rounded-full h-10 w-10 flex items-center justify-center font-bold text-xl">&times;</button>
-                                </div>
-                            </div>
-                        )}
-                        <div className="container mx-auto px-6 py-24">
-                            <button onClick={() => setCurrentPage('projects')} className="text-yellow-500 hover:text-yellow-400 mb-8 flex items-center gap-2">← Back to Projects</button>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                <div className="md:col-span-1"><div className="sticky top-24"><p className="text-sm text-gray-400">UI/UX Designer</p><p className="text-sm text-gray-400">3 months</p><p className="text-sm text-gray-400">2024</p></div></div>
-                                <div className="md:col-span-2">
-                                    <h1 className="text-5xl font-bold mb-4">Cricket Gear Hub</h1>
-                                    <p className="text-lg text-gray-300 mb-8">Complete e-commerce mobile app UI/UX design with 200+ wireframes and interactive prototypes, featuring comprehensive user research across customers, sellers, and admin interfaces.</p>
-                                    <div className="border-t border-b border-gray-700 py-4 mb-8"><p><span className="font-semibold">TEAM:</span> Group of 5</p></div>
-                                    <h2 className="text-3xl font-bold mb-4">Project Vision</h2>
-                                    <p className="mb-8 text-gray-400">Cricket Gear Hub was designed to address the fragmented market for cricket equipment, creating a unified e-commerce platform that connects buyers, sellers, and administrators. The goal was to build an intuitive, user-friendly mobile experience that simplifies the process of buying and selling specialized sports equipment.</p>
-                                    <h2 className="text-3xl font-bold mb-4">Core Features</h2>
-                                    <ul className="list-disc list-inside mb-8 text-gray-400 space-y-2">
-                                        <li>Interactive Product Catalog with detailed listings and filtering options</li>
-                                        <li>Intuitive Checkout Flow with multiple payment options</li>
-                                        <li>User Research-backed design for three distinct user types</li>
-                                        <li>Comprehensive Admin and Seller Dashboards for inventory and sales management</li>
-                                        <li>Interactive Prototypes to showcase the user journey and design decisions</li>
-                                    </ul>
-                                    <h2 className="text-3xl font-bold mb-4">Interactive Prototype</h2>
-                                    <p className="mb-4 text-gray-400">Experience the complete Cricket Gear Hub mobile app through this interactive prototype. Navigate through the app's key screens and flows directly on this page.</p>
-                                    <button onClick={() => setShowPrototype(true)} className="inline-block bg-yellow-500 text-black px-6 py-3 rounded-full font-semibold hover:bg-yellow-400 transition-colors mb-8">Launch Mobile Prototype</button>
-                                    <h2 className="text-3xl font-bold mb-4">User Experience Goals</h2>
-                                    <p className="mb-8 text-gray-400">The primary goal was to make the e-commerce journey seamless and delightful for all users. The design prioritized accessibility, clear navigation, and a modern aesthetic that resonates with cricket enthusiasts.</p>
-                                    <div className="flex flex-wrap gap-2 mb-12">{["Mobile App Design", "UI/UX", "User Research", "E-commerce", "Figma", "Prototype"].map((tech, i) => <span key={i} className="bg-gray-800 text-yellow-400 text-sm px-3 py-1 rounded-full">{tech}</span>)}</div>
-                                </div>
+                    <>
+                    {showPrototype && (
+                        <div className="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm backdrop-saturate-110 flex items-center justify-center z-50 p-4" onClick={() => setShowPrototype(false)}>
+                            <div className="relative w-full max-w-sm h-[85vh] bg-black border-4 border-neutral-700 rounded-[40px] p-2 shadow-2xl" onClick={e => e.stopPropagation()}>
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-xl z-10"></div>
+                                <iframe className="w-full h-full rounded-[32px] bg-white" src={figmaEmbedUrl} allowFullScreen title="Cricket Gear Hub Figma Prototype"></iframe>
+                                <button onClick={() => setShowPrototype(false)} className="absolute -top-5 -right-5 bg-yellow-400 text-black rounded-full h-12 w-12 flex items-center justify-center font-bold text-2xl transform hover:scale-110 transition-transform select-none" aria-label="Close prototype">&times;</button>
                             </div>
                         </div>
-                        <Footer />
-                    </div>
+                    )}
+                    <ProjectDetailPage project={projects.find(p => p.id === 'cricket')} teamSize="Group of 5" duration="3 months" year="2025">
+                        <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Project Vision</h2>
+                        <p className="mb-12 text-lg text-neutral-400 leading-relaxed">Cricket Gear Hub was designed to address the fragmented market for cricket equipment, creating a unified e-commerce platform that connects buyers, sellers, and administrators. The goal was to build an intuitive, user-friendly mobile experience that simplifies the process of buying and selling specialized sports equipment.</p>
+                        <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Interactive Prototype</h2>
+                        <p className="mb-6 text-lg text-neutral-400 leading-relaxed">Experience the complete Cricket Gear Hub mobile app through this interactive prototype. Navigate through the app's key screens and flows to understand the user journey from product discovery to checkout.</p>
+                        <button onClick={() => setShowPrototype(true)} className="inline-block bg-yellow-400 text-black px-6 py-3 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 mb-12 shadow-lg shadow-yellow-400/10 active:scale-95 active:duration-75 select-none">
+                            Launch Mobile Prototype
+                        </button>
+                        <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Core Features & Design Process</h2>
+                        <ul className="list-disc list-inside mb-12 text-lg text-neutral-400 space-y-3 leading-relaxed">
+                            <li><strong>User-Centric Design:</strong> Conducted in-depth research to define three distinct personas (customer, seller, admin), ensuring the UI/UX catered to each group's unique needs.</li>
+                            <li><strong>Extensive Prototyping:</strong> Developed over <span className="text-yellow-400 font-semibold">200 wireframes in Figma</span>, iterating from low-fidelity sketches to high-fidelity, interactive prototypes.</li>
+                            <li><strong>Intuitive Checkout Flow:</strong> Designed a streamlined, multi-step checkout process with clear progress indicators and multiple payment options to reduce cart abandonment.</li>
+                            <li><strong>Comprehensive Dashboards:</strong> Created detailed admin and seller dashboards for inventory management, order tracking, and sales analytics.</li>
+                        </ul>
+                    </ProjectDetailPage>
+                    </>
                 );
             };
 
+            const DentalProject = () => (
+                <ProjectDetailPage project={projects.find(p => p.id === 'dental')} teamSize="Group of 2" duration="3 months" year="2025">
+                    <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">About the Project</h2>
+                    <p className="mb-12 text-lg text-neutral-400 leading-relaxed">PureGleam addresses the need for modern dental clinics to have an online presence that facilitates patient interaction, appointment scheduling, and service promotion. The platform bridges the gap between traditional dental practices and digital patient engagement, building trust and improving accessibility.</p>
+                    <ProjectImage src="https://i.postimg.cc/KzKppKg1/Picsart-25-08-27-17-32-03-876.jpg" alt="Dental Home" caption="Homepage / Landing Page" />
+                    <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Key Features & Business Value</h2>
+                    <ul className="list-disc list-inside mb-12 text-lg text-neutral-400 space-y-3 leading-relaxed">
+                        <li><strong>Service Discovery:</strong> Comprehensive service listings with detailed descriptions and transparent pricing to inform patient decisions.</li>
+                        <li><strong>Social Proof:</strong> A patient review and rating system to <span className="text-yellow-400 font-semibold">build credibility and trust</span> for the clinic.</li>
+                        <li><strong>Effortless Booking:</strong> An online appointment system with calendar integration to reduce administrative overhead.</li>
+                        <li><strong>Automated Communication:</strong> Email notifications for appointments and reminders to minimize no-shows.</li>
+                        <li><strong>Responsive Design:</strong> A fully responsive architecture optimized for all devices, ensuring a consistent experience.</li>
+                    </ul>
+                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+                        <ProjectImage src="https://i.postimg.cc/jj3kh6CV/Picsart-25-08-27-17-32-26-627.jpg" alt="Dental About" caption="About Us Section" />
+                        <ProjectImage src="https://i.postimg.cc/RFjskMcX/Picsart-25-08-27-17-32-48-159.jpg" alt="Dental Services" caption="Our Services Section" />
+                    </div>
+                </ProjectDetailPage>
+            );
+
             const ProjectsPage = () => {
-                const bioText = "Hi, I am Shreyash, a final-year Computer Engineering student at Goa College of Engineering. I'm skilled in database-driven systems and UI/UX design, with experience creating functional, user-centric solutions that bridge technical implementation with great user experience. With my international schooling background in Oman, I'm fluent in English and passionate about creating digital solutions that make a real impact.";
+                const bioText = "I'm a 2025 Computer Engineering graduate specializing in UI/UX design and database-driven systems. I create functional, user-centric solutions that bridge technical implementation with great user experience. My international background enhances my passion for creating digital solutions with real impact.";
                 return (
-                    <div className="bg-black text-white">
-                        <header className="min-h-screen flex flex-col items-center justify-center text-center px-6 py-24">
-                             <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+                    <div className="bg-black text-white page-transition touch-pan-y">
+                        <header className="min-h-screen flex items-center justify-center text-center px-8 lg:px-12 pt-20 pb-32">
+                             <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
                                 <div className="text-center md:text-left flex-1 md:pr-12">
-                                    <h1 className="text-5xl md:text-6xl font-extrabold mb-4 text-white">Shreyash Desai</h1>
-                                    <p className="text-lg md:text-xl text-gray-300 mb-6">Computer Engineering Graduate, 2025</p>
-                                    <Typewriter id="hero-bio" text={bioText} speed={25} className="max-w-2xl mx-auto md:mx-0 text-gray-400 mb-8" />
+                                    <h1 className="text-5xl md:text-7xl font-extrabold mb-4 text-neutral-100 tracking-tighter bg-gradient-to-r from-yellow-400 to-yellow-300 bg-clip-text text-transparent text-shadow-sm">Shreyash Desai</h1>
+                                    <p className="text-xl md:text-2xl text-yellow-400 mb-8 font-medium"><span className="font-semibold">UI/UX Designer</span> & Developer</p>
+                                    <Typewriter id="hero-bio" text={bioText} speed={25} className="max-w-xl mx-auto md:mx-0 text-lg text-neutral-400 mb-10 leading-relaxed" />
+                                    <div className="flex justify-center md:justify-start items-center space-x-4">
+                                        <a href="#projects" className="bg-yellow-400 text-black px-6 py-3 rounded-full text-base font-semibold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg shadow-yellow-400/10 active:scale-95 active:duration-75 select-none">
+                                            View My Work
+                                        </a>
+                                        <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-3 rounded-full bg-neutral-800/50 hover:bg-neutral-800 text-neutral-400 hover:text-yellow-400 transition-all duration-500 ease-out transform hover:scale-110 active:scale-95 active:duration-75"><LinkedinIcon size={24} /></a>
+                                        <a href={githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-3 rounded-full bg-neutral-800/50 hover:bg-neutral-800 text-neutral-400 hover:text-yellow-400 transition-all duration-500 ease-out transform hover:scale-110 active:scale-95 active:duration-75"><GithubIcon size={24} /></a>
+                                    </div>
                                 </div>
                                 <div className="flex-shrink-0">
-                                    <div className="w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-yellow-500 shadow-lg">
+                                    <div className="w-56 h-56 sm:w-72 sm:h-72 rounded-full overflow-hidden border-4 border-neutral-800 shadow-2xl shadow-yellow-400/10 transform hover:scale-105 transition-transform duration-500 ease-out">
                                         <img src={profileImageUrl} alt="Shreyash Desai" className="w-full h-full object-cover" />
                                     </div>
                                 </div>
                             </div>
                         </header>
                         <Marquee items={traits} />
-                        <main className="container mx-auto px-6 py-16">
-                             <div className="text-center mb-12">
-                                <h2 className="text-4xl font-bold text-white">Showcasing My Work</h2>
-                                <p className="text-lg text-gray-500">from 2022 till date</p>
+                        <main id="projects" className="max-w-7xl mx-auto px-8 lg:px-12 pt-20 pb-32">
+                             <div className="text-center mb-16">
+                                <h2 className="text-4xl md:text-5xl font-bold text-white tracking-wider text-shadow-sm">Selected Works</h2>
+                                <p className="text-lg text-neutral-500 mt-2">A collection of my recent projects.</p>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                 {projects.map((project) => <ProjectCard key={project.id} project={project} />)}
                             </div>
                         </main>
-                        <section className="py-16">
-                            <div className="container mx-auto px-6 text-center">
-                                <h2 className="text-4xl font-bold mb-4 text-white">Valuable Feedback</h2>
-                                <p className="text-lg text-gray-500 mb-12">Perspectives from my professional circle</p>
+                        <section className="py-24 bg-neutral-950/50">
+                            <div className="max-w-7xl mx-auto px-8 lg:px-12 text-center">
+                                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white tracking-wider text-shadow-sm">What My Colleagues Say</h2>
+                                <p className="text-lg text-neutral-500 mb-16">Perspectives from my professional circle.</p>
                             </div>
-                            <TestimonialMarquee testimonials={testimonials} />
+                            <div className="relative flex overflow-x-hidden py-10">
+                                <div className="animate-marquee flex">
+                                    {[...testimonials, ...testimonials].map((testimonial, index) => (
+                                        <TestimonialCard key={index} testimonial={testimonial} />
+                                    ))}
+                                </div>
+                            </div>
                         </section>
                         <Footer />
                     </div>
@@ -476,44 +711,47 @@
             };
 
             const AboutPage = () => {
-                const aboutText1 = "Hi, I am Shreyash, a final-year Computer Engineering student at Goa College of Engineering. Skilled in database-driven systems and UI/UX design, with experience creating functional, user-centric solutions that bridge technical implementation with great user experience.";
-                const aboutText2 = "With NPTEL certifications in HCI, Leadership, Privacy and Security in Social Media, and Social Network Analysis, I bring both technical depth and design thinking to every project. Fluent in English due to my schooling background in Oman, I'm passionate about creating digital solutions that make a real impact.";
+                const aboutText1 = "I am a passionate <span class='text-yellow-400 font-semibold'>UI/UX designer</span> and developer with a foundation in <span class='text-yellow-400 font-semibold'>Computer Engineering</span>. My approach is rooted in empathy and a deep understanding of user needs, combined with the technical expertise to bring complex ideas to life. I thrive on solving challenging problems and creating interfaces that are not only beautiful but also intuitive and accessible.";
+                const aboutText2 = "With NPTEL certifications in HCI and Leadership, I bring a holistic perspective to every project. My international schooling background has equipped me with strong communication skills and a global outlook, allowing me to collaborate effectively in diverse teams. I am driven by the desire to create digital solutions that make a meaningful impact.";
 
                 return (
-                    <div className="bg-black text-white min-h-screen">
-                        <div className="container mx-auto px-6 py-24">
+                    <div className="bg-black text-white min-h-screen page-transition">
+                        <div className="max-w-7xl mx-auto px-8 lg:px-12 pt-32 pb-24">
                             <div className="max-w-4xl mx-auto">
-                                <p className="text-yellow-500 font-semibold mb-4 tracking-wide">PRIORITIZING FUNCTIONALITY AND GREAT USER EXPERIENCE</p>
-                                <h1 className="text-5xl font-extrabold mb-6">Shreyash Desai</h1>
-                                <div className="text-lg text-gray-300 mb-12 space-y-4">
-                                    <Typewriter id="about-bio-1" text={aboutText1} speed={25} />
-                                    <Typewriter id="about-bio-2" text={aboutText2} speed={25} />
+                                <p className="text-yellow-400 font-semibold mb-4 tracking-widest text-sm">ABOUT ME</p>
+                                <h1 className="text-5xl md:text-6xl font-extrabold mb-8 tracking-tighter text-shadow-sm">Crafting Experiences, Building Solutions.</h1>
+                                <div className="text-lg text-neutral-300 mb-16 space-y-6 leading-relaxed">
+                                    <p dangerouslySetInnerHTML={{ __html: aboutText1 }} />
+                                    <p dangerouslySetInnerHTML={{ __html: aboutText2 }} />
                                 </div>
-                                <div className="border-t border-gray-700 pt-12 mb-12">
-                                    <h2 className="text-3xl font-bold mb-8 text-yellow-500 tracking-wider">EXPERIENCE</h2>
+                                
+                                <div className="border-t border-neutral-800 pt-16 mb-16">
+                                    <h2 className="text-3xl font-bold mb-10 text-yellow-400 tracking-wider">EXPERIENCE</h2>
                                     {experience.map((job, index) => (
-                                        <div key={index} className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
-                                            <div className="md:col-span-1"><p className="font-semibold text-white text-lg">{job.role}</p><p className="text-base text-gray-300">{job.org}</p><p className="text-sm text-yellow-500">{job.dates}</p></div>
-                                            <div className="md:col-span-3"><ul className="list-disc list-inside text-gray-400 space-y-2">{job.bullets.map((bullet, i) => <li key={i}>{bullet}</li>)}</ul></div>
+                                        <div key={index} className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+                                            <div className="md:col-span-1"><p className="font-semibold text-white text-lg">{job.role}</p><p className="text-base text-neutral-300">{job.org}</p><p className="text-sm text-neutral-500">{job.dates}</p></div>
+                                            <div className="md:col-span-3"><ul className="list-disc list-inside text-neutral-400 space-y-3 leading-relaxed">{job.bullets.map((bullet, i) => <li key={i}>{bullet}</li>)}</ul></div>
                                         </div>
                                     ))}
                                 </div>
-                                <div className="border-t border-gray-700 pt-12 mb-12">
-                                    <h2 className="text-3xl font-bold mb-8 text-yellow-500 tracking-wider">EDUCATION</h2>
+                                
+                                <div className="border-t border-neutral-800 pt-16 mb-16">
+                                    <h2 className="text-3xl font-bold mb-10 text-yellow-400 tracking-wider">EDUCATION</h2>
                                     {education.map((edu, index) => (
-                                         <div key={index} className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
-                                            <div className="md:col-span-1"><p className="font-semibold text-white text-lg">{edu.degree}</p><p className="text-base text-gray-300">{edu.org}</p><p className="text-sm text-yellow-500">{edu.dates}</p></div>
-                                            <div className="md:col-span-3"><ul className="list-disc list-inside text-gray-400 space-y-2">{edu.bullets.map((bullet, i) => <li key={i}>{bullet}</li>)}</ul></div>
+                                         <div key={index} className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+                                            <div className="md:col-span-1"><p className="font-semibold text-white text-lg">{edu.degree}</p><p className="text-base text-neutral-300">{edu.org}</p><p className="text-sm text-neutral-500">{edu.dates}</p></div>
+                                            <div className="md:col-span-3"><ul className="list-disc list-inside text-neutral-400 space-y-3 leading-relaxed">{edu.bullets.map((bullet, i) => <li key={i} dangerouslySetInnerHTML={{ __html: bullet }} />)}</ul></div>
                                         </div>
                                     ))}
                                 </div>
-                                <div className="border-t border-gray-700 pt-12 mb-12">
-                                    <h2 className="text-3xl font-bold mb-8 text-yellow-500 tracking-wider">CERTIFICATIONS</h2>
+                                
+                                <div className="border-t border-neutral-800 pt-16 mb-12">
+                                    <h2 className="text-3xl font-bold mb-10 text-yellow-400 tracking-wider">CERTIFICATIONS</h2>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                         {certificates.map((cert, index) => (
-                                            <a key={index} href={cert.link} target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-transform transform hover:scale-105 group">
-                                                <p className="font-semibold mb-2 text-white">{cert.name}</p>
-                                                <span className="text-sm text-yellow-500 group-hover:underline">View Certificate →</span>
+                                            <a key={index} href={cert.link} target="_blank" rel="noopener noreferrer" className="bg-neutral-900 p-6 rounded-2xl transition-all duration-500 ease-out transform hover:rotate-1 hover:scale-102 group select-none inner-glow">
+                                                <p className="font-semibold mb-2 text-neutral-100">{cert.name}</p>
+                                                <span className="text-sm text-yellow-400 flex items-center gap-2">View Certificate <ArrowRightIcon className="transition-transform duration-300 group-hover:translate-x-1"/></span>
                                             </a>
                                         ))}
                                     </div>
@@ -526,20 +764,25 @@
             };
 
             const renderCurrentPage = () => {
-                switch (currentPage) {
-                    case 'projects': return <ProjectsPage />;
-                    case 'about': return <AboutPage />;
-                    case 'dams': return <DAMSProject />;
-                    case 'dental': return <DentalProject />;
-                    case 'cricket': return <CricketProject />;
-                    case 'conversify': return <ConversifyProject />;
-                    default: return <ProjectsPage />;
-                }
+                const pages = {
+                    'projects': <ProjectsPage />,
+                    'about': <AboutPage />,
+                    'dams': <DAMSProject />,
+                    'dental': <DentalProject />,
+                    'cricket': <CricketProject />,
+                    'conversify': <ConversifyProject />
+                };
+                return pages[currentPage] || <ProjectsPage />;
             };
 
             return (
                 <div className="bg-black font-sans">
                     <Navigation />
+                    <ContactModal 
+                        isOpen={isModalOpen} 
+                        onClose={() => setIsModalOpen(false)} 
+                        linkedInUrl={linkedInUrl} 
+                    />
                     {renderCurrentPage()}
                 </div>
             );
