@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shreyash Desai | Senior UI/UX Designer Portfolio</title>
+    <title>Shreyash Desai | Portfolio</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Inter Font -->
@@ -96,12 +96,12 @@
             box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.05), inset 0 0 20px 0 rgba(250,204,21,0.03);
         }
         
-        /* Inner glow effect for cards and images - ENHANCED */
+        /* Inner glow effect for cards and images - TONED DOWN for subtlety */
         .inner-glow {
-            box-shadow: inset 0 0 15px 4px rgba(250, 204, 21, 0.08), /* More prominent yellow glow */
-                        inset 0 0 8px 3px rgba(255, 255, 255, 0.15); /* Brighter white edge shine */
-            border: 1px solid rgba(255, 255, 255, 0.15); /* Slightly more visible border */
-            transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out; /* Add transition */
+            box-shadow: inset 0 0 12px 3px rgba(250, 204, 21, 0.06), /* Softer yellow glow */
+                        inset 0 0 6px 2px rgba(255, 255, 255, 0.12); /* Softer white edge */
+            border: 1px solid rgba(255, 255, 255, 0.12); /* Slightly softer border */
+            transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
         }
     </style>
     <!-- React CDN -->
@@ -372,6 +372,43 @@
                 </div>
             );
         };
+        
+        // NEW: Component to display certificates in a modal
+        const CertificateModal = ({ imageUrl, onClose }) => {
+            if (!imageUrl) return null;
+
+            return (
+                <div 
+                    className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn" 
+                    onClick={onClose}
+                    role="dialog"
+                    aria-modal="true"
+                >
+                    <div 
+                        className="relative bg-neutral-900 border border-neutral-700 rounded-2xl p-2 shadow-2xl w-full max-w-4xl" 
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <img 
+                            src={imageUrl} 
+                            alt="Certificate" 
+                            className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
+                            onError={(e) => { 
+                                e.target.onerror = null; 
+                                e.target.src = `https://placehold.co/1200x800/171717/F5F5F5?text=Certificate+Not+Found`;
+                            }}
+                        />
+                        <button 
+                            onClick={onClose} 
+                            className="absolute -top-4 -right-4 bg-yellow-400 text-black rounded-full h-10 w-10 flex items-center justify-center font-bold text-xl transform hover:scale-110 transition-transform select-none" 
+                            aria-label="Close certificate view"
+                        >
+                            &times;
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
 
         // --- MAIN APP ---
         const App = () => {
@@ -380,6 +417,7 @@
             const [isMenuOpen, setIsMenuOpen] = React.useState(false);
             const [isModalOpen, setIsModalOpen] = React.useState(false);
             const [activeComponent, setActiveComponent] = React.useState('projects');
+            const [viewingCertificate, setViewingCertificate] = React.useState(null); // State for the certificate modal
 
             const navigate = (page) => {
                 if (page === activeComponent) return;
@@ -399,7 +437,8 @@
                 { id: 'conversify', title: "Conversify", blurb: "A communication skills training platform that helps users improve their speaking abilities through interactive assessments and personalized learning experiences.", type: "detail", tags: ["UI/UX", "Learning Platform", "Figma"], thumbnail: "https://i.postimg.cc/NFdyy0px/Picsart-25-08-27-17-18-55-243.png" },
                 { id: 'dams', title: "Departmental Asset Management", blurb: "Digitized procurement, inventory, and maintenance across a college department with role-based dashboards and multi-level approval workflows.", type: "detail", tags: ["Full-Stack", "PHP", "Digital Workflow"], thumbnail: "https://i.postimg.cc/FsKpTk5N/IMG-20250827-172042.jpg" },
                 { id: 'cricket', title: "Cricket Gear Hub", blurb: "Complete e-commerce mobile app UI/UX design with 200+ wireframes and interactive prototypes, featuring comprehensive user research.", type: "detail", tags: ["Mobile App", "UI/UX", "E-commerce"], thumbnail: "https://i.postimg.cc/4y9MyKJD/file-00000000b3bc61f9a3363ef3e6b3b543.png" },
-                { id: 'dental', title: "PureGleam Dental Management", blurb: "Responsive web application for dental clinics featuring service listings, patient reviews, and appointment booking with automated notifications.", type: "detail", tags: ["Web App", "PHP", "Healthcare"], thumbnail: "https://i.postimg.cc/KzKppKg1/Picsart-25-08-27-17-32-03-876.jpg" }
+                { id: 'dental', title: "PureGleam Dental Management", blurb: "Responsive web application for dental clinics featuring service listings, patient reviews, and appointment booking with automated notifications.", type: "detail", tags: ["Web App", "PHP", "Healthcare"], thumbnail: "https://i.postimg.cc/KzKppKg1/Picsart-25-08-27-17-32-03-876.jpg" },
+                { id: 'powerpoint', title: "Tourism in Goa - Boon or Bane?", blurb: "An in-depth presentation analyzing the dual impact of tourism on Goa's economy, culture, and environment, created with Canva.", type: "detail", tags: ["Presentation Design", "Canva", "Case Study"], thumbnail: "https://i.postimg.cc/9f8Q4M0s/Picsart-25-08-30-16-14-52-622.jpg" }
             ];
             const traits = ["DESIGN SYSTEMS", "USER-CENTRIC", "PIXEL-PERFECT", "INTERACTION DESIGN", "IMPACT-DRIVEN", "ACCESSIBILITY"];
             const testimonials = [
@@ -423,13 +462,17 @@
                 { degree: "Higher Secondary Education", org: "Govt. HSS, Canacona", dates: "2020-2021 | 69%", bullets: ["Completed higher secondary education with a focus on science and mathematics, building a strong analytical and problem-solving foundation."]},
                 { degree: "Secondary Education", org: "Indian School Muscat, Oman", dates: "2018-2019 | 79.4%", bullets: ["Gained a global perspective and enhanced cross-cultural communication skills through an international schooling background."]}
             ];
+            
+            // UPDATED: Certificate data is corrected and expanded.
             const certificates = [
                 { name: "Human-Computer Interaction | NPTEL", link: "https://i.postimg.cc/QdjC0QNy/hci-nptel.jpg" },
                 { name: "Leadership & Team Effectiveness | NPTEL", link: "https://i.postimg.cc/MK7X7PwB/leadership-nptel.jpg" },
                 { name: "Privacy & Security in Social Media | NPTEL", link: "https://i.postimg.cc/C5yLDD6J/privacy-security-nptel.jpg" },
                 { name: "Social Network Analysis | NPTEL", link: "https://i.postimg.cc/J4VGBwfm/social-network-nptel.jpg" },
-                { name: "Elite Trader Funded Next", link: "https://i.postimg.cc/yx9xrnSw/Screenshot-20250827-195940.jpg" }
+                { name: "Fluxatic Global UI/UX Internship – Certificate of Completion (2024)", link: "https://i.postimg.cc/yx9xrnSw/Screenshot-20250827-195940.jpg" },
+                { name: "Elite Trader Funded Next", link: "https://i.postimg.cc/gjgbtp29/Shreyash-Desai-aa-ec3f181f35cd3-2.jpg" }
             ];
+
             const linkedInUrl = "https://www.linkedin.com/in/shreyash-desai-892a4a371?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app";
             const resumeUrl = "https://i.postimg.cc/J477rkrV/Screenshot-20250828-131322.jpg";
             const githubUrl = "https://github.com/shreyash-desai";
@@ -547,7 +590,7 @@
                                     <h1 className="text-5xl lg:text-6xl font-extrabold mb-4 leading-tight tracking-tighter text-shadow-sm">{project.title}</h1>
                                     <p className="text-lg text-neutral-400 mb-8">{project.blurb}</p>
                                     <div className="space-y-4 text-neutral-300 border-l-4 border-yellow-400/50 pl-6">
-                                        <p><strong className="font-semibold text-neutral-100 w-24 inline-block">ROLE</strong> {project.tags[0]}</p>
+                                        <p><strong className="font-semibold text-neutral-100 w-24 inline-block">TYPE</strong> {project.tags[0]}</p>
                                         <p><strong className="font-semibold text-neutral-100 w-24 inline-block">DURATION</strong> {duration}</p>
                                         <p><strong className="font-semibold text-neutral-100 w-24 inline-block">TEAM</strong> {teamSize}</p>
                                         <p><strong className="font-semibold text-neutral-100 w-24 inline-block">YEAR</strong> {year}</p>
@@ -656,6 +699,60 @@
                     </div>
                 </ProjectDetailPage>
             );
+            
+            const PowerPointProject = () => {
+                const [showPresentation, setShowPresentation] = React.useState(false);
+                const presentationEmbedUrl = "https://www.canva.com/design/DAGv9Do3XzM/JFgMN2hwYhYBoGZGeEleXw/view?embed";
+
+                const slides = [
+                    { src: 'https://i.postimg.cc/9f8Q4M0s/Picsart-25-08-30-16-14-52-622.jpg', caption: 'Slide 1: Tourism in Goa - Boon or Bane?' },
+                    { src: 'https://i.postimg.cc/rwqVQWtv/Picsart-25-08-30-16-16-35-574.jpg', caption: 'Slide 2: The Reality: Mass Tourism Impact' },
+                    { src: 'https://i.postimg.cc/ncP21K5L/Picsart-25-08-30-16-17-33-133.jpg', caption: "Slide 3: The Promise: Goa's Natural Paradise" },
+                    { src: 'https://i.postimg.cc/QtmkKc1h/Picsart-25-08-30-16-18-20-322.jpg', caption: "Slide 4: Economic Impact: The Full Truth - The Economic Engine" },
+                    { src: 'https://i.postimg.cc/0jHYcxV4/Picsart-25-08-30-16-18-56-006.jpg', caption: 'Slide 5: Economic Impact: The Hidden Cost' },
+                    { src: 'https://i.postimg.cc/3JVjG844/Picsart-25-08-30-16-20-10-447.jpg', caption: 'Slide 6: Cultural Erosion' },
+                    { src: 'https://i.postimg.cc/KzGtb4VV/Picsart-25-08-30-16-21-18-643.jpg', caption: 'Slide 7: Environmental Crisis' },
+                    { src: 'https://i.postimg.cc/tRmF0qzS/Picsart-25-08-30-16-22-34-582.jpg', caption: 'Slide 8: Social Displacement' },
+                    { src: 'https://i.postimg.cc/Yq5g9dZQ/Picsart-25-08-30-16-23-20-714.jpg', caption: 'Slide 9: Sustainable Solutions' },
+                    { src: 'https://i.postimg.cc/CKYqCzF1/Picsart-25-08-30-16-23-56-530.jpg', caption: 'Slide 10: The Verdict' },
+                ];
+
+                return (
+                    <>
+                    {showPresentation && (
+                        <div className="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm backdrop-saturate-110 flex items-center justify-center z-50 p-4 animate-fadeIn" onClick={() => setShowPresentation(false)}>
+                            <div className="relative w-full max-w-5xl h-[85vh] bg-neutral-900 border-2 border-neutral-700 rounded-2xl p-2 shadow-2xl" onClick={e => e.stopPropagation()}>
+                                <iframe 
+                                    className="w-full h-full rounded-lg" 
+                                    src={presentationEmbedUrl} 
+                                    allowFullScreen={true} 
+                                    allow="fullscreen"
+                                    title="Tourism in Goa - Boon or Bane? Presentation">
+                                </iframe>
+                                <button onClick={() => setShowPresentation(false)} className="absolute -top-5 -right-5 bg-yellow-400 text-black rounded-full h-12 w-12 flex items-center justify-center font-bold text-2xl transform hover:scale-110 transition-transform select-none" aria-label="Close presentation">&times;</button>
+                            </div>
+                        </div>
+                    )}
+                    <ProjectDetailPage project={projects.find(p => p.id === 'powerpoint')} teamSize="Solo Project" duration="1 Week" year="2025">
+                        <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Project Vision</h2>
+                        <p className="mb-12 text-lg text-neutral-400 leading-relaxed">This presentation, created in Canva, takes a critical look at the tourism industry in Goa. It aims to explore both the significant economic benefits and the often-overlooked negative consequences on the environment, culture, and local communities. The goal is to present a balanced view and spark a conversation about sustainable tourism.</p>
+                        
+                        <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Live Presentation</h2>
+                        <p className="mb-6 text-lg text-neutral-400 leading-relaxed">Experience the full presentation hosted on Canva. This interactive viewer provides the most authentic look at the flow and dynamism of the creative deck.</p>
+                        <button onClick={() => setShowPresentation(true)} className="inline-block bg-yellow-400 text-black px-6 py-3 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 mb-12 shadow-lg shadow-yellow-400/10 active:scale-95 active:duration-75 select-none">
+                            Launch Interactive Presentation
+                        </button>
+
+                        <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Slide-by-Slide Breakdown</h2>
+                        <p className="mb-12 text-lg text-neutral-400 leading-relaxed">Below is a showcase of each individual slide from the presentation. This highlights the design, layout, and content strategy of the deck, from the impactful opening to the compelling call to action.</p>
+                        
+                        {slides.map((slide, index) => (
+                           <ProjectImage key={index} src={slide.src} alt={`Presentation Slide ${index + 1}`} caption={slide.caption} />
+                        ))}
+                    </ProjectDetailPage>
+                    </>
+                );
+            };
 
             const ProjectsPage = () => {
                 const bioText = "I'm a 2025 Computer Engineering graduate specializing in UI/UX design and database-driven systems. I create functional, user-centric solutions that bridge technical implementation with great user experience. My international background enhances my passion for creating digital solutions with real impact.";
@@ -749,10 +846,10 @@
                                     <h2 className="text-3xl font-bold mb-10 text-yellow-400 tracking-wider">CERTIFICATIONS</h2>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                         {certificates.map((cert, index) => (
-                                            <a key={index} href={cert.link} target="_blank" rel="noopener noreferrer" className="bg-neutral-900 p-6 rounded-2xl transition-all duration-500 ease-out transform hover:rotate-1 hover:scale-102 group select-none inner-glow">
+                                            <button key={index} onClick={() => setViewingCertificate(cert.link)} className="text-left bg-neutral-900 p-6 rounded-2xl transition-all duration-500 ease-out transform hover:rotate-1 hover:scale-102 group select-none inner-glow">
                                                 <p className="font-semibold mb-2 text-neutral-100">{cert.name}</p>
                                                 <span className="text-sm text-yellow-400 flex items-center gap-2">View Certificate <ArrowRightIcon className="transition-transform duration-300 group-hover:translate-x-1"/></span>
-                                            </a>
+                                            </button>
                                         ))}
                                     </div>
                                 </div>
@@ -770,7 +867,8 @@
                     'dams': <DAMSProject />,
                     'dental': <DentalProject />,
                     'cricket': <CricketProject />,
-                    'conversify': <ConversifyProject />
+                    'conversify': <ConversifyProject />,
+                    'powerpoint': <PowerPointProject />
                 };
                 return pages[currentPage] || <ProjectsPage />;
             };
@@ -782,6 +880,10 @@
                         isOpen={isModalOpen} 
                         onClose={() => setIsModalOpen(false)} 
                         linkedInUrl={linkedInUrl} 
+                    />
+                    <CertificateModal 
+                        imageUrl={viewingCertificate}
+                        onClose={() => setViewingCertificate(null)}
                     />
                     {renderCurrentPage()}
                 </div>
