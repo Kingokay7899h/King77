@@ -435,6 +435,7 @@
 
             const projects = [
                 { id: 'conversify', title: "Conversify", blurb: "A communication skills training platform that helps users improve their speaking abilities through interactive assessments and personalized learning experiences.", type: "detail", tags: ["UI/UX", "Learning Platform", "Figma"], thumbnail: "https://i.postimg.cc/NFdyy0px/Picsart-25-08-27-17-18-55-243.png" },
+            { id: 'vehicle-rental', title: "Vehicle Rental Booking System", blurb: "A full-stack web application for renting vehicles with step-by-step booking flow, real-time validations, and backend integration to prevent double-booking.", type: "detail", tags: ["Full-Stack", "React", "Node.js", "Database"], thumbnail: "https://raw.githubusercontent.com/Kingokay7899h/vehicle-rental-booking-system/refs/heads/main/images/step1.png" },
                 { id: 'dams', title: "Departmental Asset Management", blurb: "Digitized procurement, inventory, and maintenance across a college department with role-based dashboards and multi-level approval workflows.", type: "detail", tags: ["Full-Stack", "PHP", "Digital Workflow"], thumbnail: "https://i.postimg.cc/FsKpTk5N/IMG-20250827-172042.jpg" },
                 { id: 'cricket', title: "Cricket Gear Hub", blurb: "Complete e-commerce mobile app UI/UX design with 200+ wireframes and interactive prototypes, featuring comprehensive user research.", type: "detail", tags: ["Mobile App", "UI/UX", "E-commerce"], thumbnail: "https://i.postimg.cc/4y9MyKJD/file-00000000b3bc61f9a3363ef3e6b3b543.png" },
                 { id: 'dental', title: "PureGleam Dental Management", blurb: "Responsive web application for dental clinics featuring service listings, patient reviews, and appointment booking with automated notifications.", type: "detail", tags: ["Web App", "PHP", "Healthcare"], thumbnail: "https://i.postimg.cc/KzKppKg1/Picsart-25-08-27-17-32-03-876.jpg" },
@@ -625,6 +626,54 @@
                 </ProjectDetailPage>
             );
 
+            const VehicleRentalProject = () => (
+    <ProjectDetailPage project={projects.find(p => p.id === 'vehicle-rental')} teamSize="Solo Project" duration="2 weeks" year="2025">
+        <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Project Vision</h2>
+        <p className="mb-12 text-lg text-neutral-400 leading-relaxed">The Vehicle Rental Booking System addresses the need for a streamlined, user-friendly platform for renting cars and bikes. Built with a modern tech stack, it features a step-by-step booking flow that prevents errors and ensures a smooth user experience from start to finish.</p>
+        
+        <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Live Demo</h2>
+        <div className="mb-12">
+            <a href="https://vehiclerentalapp.netlify.app/" target="_blank" rel="noopener noreferrer" className="inline-block bg-yellow-400 text-black px-6 py-3 rounded-full font-semibold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-yellow-400/10 active:scale-95 active:duration-75 select-none mr-4 mb-4">
+                View Live Demo
+            </a>
+            <a href="https://github.com/Kingokay7899h/vehicle-rental-booking-system" target="_blank" rel="noopener noreferrer" className="inline-block bg-neutral-800 text-white px-6 py-3 rounded-full font-semibold hover:bg-neutral-700 transition-all duration-300 transform hover:scale-105 shadow-lg active:scale-95 active:duration-75 select-none mb-4">
+                View Source Code
+            </a>
+        </div>
+
+        <ProjectImage src="https://raw.githubusercontent.com/Kingokay7899h/vehicle-rental-booking-system/refs/heads/main/images/step1.png" alt="Step 1 - Enter Name" caption="Step 1: Enter Your Name" />
+        
+        <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Key Features & Technical Implementation</h2>
+        <ul className="list-disc list-inside mb-12 text-lg text-neutral-400 space-y-3 leading-relaxed">
+            <li><strong>Multi-step Booking Flow:</strong> Intuitive 6-step process from name entry to booking confirmation.</li>
+            <li><strong>Dynamic Data Fetching:</strong> Real-time vehicle data loaded from backend database with <span className="text-yellow-400 font-semibold">no hardcoding</span>.</li>
+            <li><strong>Double-booking Prevention:</strong> Advanced date validation system prevents overlapping reservations.</li>
+            <li><strong>Modern Tech Stack:</strong> React frontend with Material UI components, Node.js/Express backend, and Sequelize ORM.</li>
+            <li><strong>Responsive Design:</strong> Seamless experience across all devices using Tailwind CSS.</li>
+        </ul>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+            <ProjectImage src="https://raw.githubusercontent.com/Kingokay7899h/vehicle-rental-booking-system/refs/heads/main/images/step2.png" alt="Step 2 - Select Wheels" caption="Step 2: Choose Number of Wheels" />
+            <ProjectImage src="https://raw.githubusercontent.com/Kingokay7899h/vehicle-rental-booking-system/refs/heads/main/images/step3.png" alt="Step 3 - Vehicle Type" caption="Step 3: Select Vehicle Type" />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+            <ProjectImage src="https://raw.githubusercontent.com/Kingokay7899h/vehicle-rental-booking-system/refs/heads/main/images/step4.png" alt="Step 4 - Select Model" caption="Step 4: Choose Specific Model" />
+            <ProjectImage src="https://raw.githubusercontent.com/Kingokay7899h/vehicle-rental-booking-system/refs/heads/main/images/step5.png" alt="Step 5 - Date Selection" caption="Step 5: Pick Date Range" />
+        </div>
+
+        <ProjectImage src="https://raw.githubusercontent.com/Kingokay7899h/vehicle-rental-booking-system/refs/heads/main/images/step6.png" alt="Step 6 - Review Booking" caption="Step 6: Review & Confirm Booking" />
+
+        <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">Booking Confirmation & Error Handling</h2>
+        <p className="mb-8 text-lg text-neutral-400 leading-relaxed">The system provides clear feedback for both successful bookings and error cases, ensuring users always understand the status of their reservation.</p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+            <ProjectImage src="https://raw.githubusercontent.com/Kingokay7899h/vehicle-rental-booking-system/refs/heads/main/images/booking-confirmed.png" alt="Booking Confirmed" caption="Successful Booking Confirmation" />
+            <ProjectImage src="https://raw.githubusercontent.com/Kingokay7899h/vehicle-rental-booking-system/refs/heads/main/images/error.png" alt="Error Handling" caption="Double-booking Prevention Error" />
+        </div>
+    </ProjectDetailPage>
+);
+            
             const DAMSProject = () => (
                 <ProjectDetailPage project={projects.find(p => p.id === 'dams')} teamSize="Group of 5" duration="6 months" year="2025">
                     <h2 className="text-3xl font-bold mb-4 text-yellow-400 tracking-wider">The Challenge: Inefficiency & Error</h2>
@@ -868,6 +917,7 @@
                     'dental': <DentalProject />,
                     'cricket': <CricketProject />,
                     'conversify': <ConversifyProject />,
+                    'vehicle-rental': <VehicleRentalProject />,
                     'powerpoint': <PowerPointProject />
                 };
                 return pages[currentPage] || <ProjectsPage />;
